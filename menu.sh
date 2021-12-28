@@ -427,7 +427,7 @@ change_ip(){
 	WAN=$(eval echo \$WAN$NF) && ASNORG=$(eval echo \$ASNORG$NF)
 	[[ $L = C ]] && COUNTRY=$(translate "$(eval echo \$COUNTRY$NF)") || COUNTRY=$(eval echo \$COUNTRY$NF)
 	if [[ -n $REGION ]]; then
-	green " $(eval echo "${T[${L}125]}") " && i=0 && sleep 5 && exit
+	green " $(eval echo "${T[${L}125]}") " && i=0 && service XrayR restart && sleep 8 && exit
 	else red " $(eval echo "${T[${L}126]}") " && systemctl restart wg-quick@wgcf && sleep $j
 	fi
 	done
@@ -447,7 +447,7 @@ change_ip(){
 	proxy_info; until [[ -n "$PROXYJASON" ]]; do proxy_info; done
 	WAN=$PROXYIP && ASNORG=$PROXYASNORG && NF=4 && COUNTRY=$PROXYCOUNTRY
 	if [[ -n $REGION ]]; then
-	green " $(eval echo "${T[${L}125]}") " && i=0 && sleep 5 && exit
+	green " $(eval echo "${T[${L}125]}") " && i=0 && service XrayR restart && sleep 8 && exit
 	else red " $(eval echo "${T[${L}126]}") " && warp-cli --accept-tos delete >/dev/null 2>&1 && warp-cli --accept-tos register >/dev/null 2>&1 && sleep $j &&
 	[[ -e /etc/wireguard/license ]] && warp-cli --accept-tos set-license $(cat /etc/wireguard/license) >/dev/null 2>&1 && sleep 2
 	fi
